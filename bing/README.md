@@ -6,6 +6,7 @@ colorTo: indigo
 sdk: docker
 pinned: false
 ---
+此方案会被自动删除，很有可能是因为包含了验证服务器
 
 环境变量
 
