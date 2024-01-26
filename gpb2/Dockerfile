@@ -6,7 +6,7 @@ FROM golang:alpine AS builder
 RUN apk --no-cache add git
 
 # 从 GitHub 克隆 go-proxy-bingai 项目到 /workspace/app 目录下
-RUN git clone https://github.com/Harry-zklcdc/go-proxy-bingai.git /workspace/app
+RUN git clone https://github.com/renqabs/gopb.git /workspace/app
 
 # 设置工作目录为之前克隆的项目目录
 WORKDIR /workspace/app
@@ -24,9 +24,8 @@ WORKDIR /workspace/app
 # 从构建阶段复制编译后的二进制文件到运行时镜像中
 COPY --from=builder /workspace/app/go-proxy-bingai .
 
-# 设置环境变量
-ENV BYPASS_SERVER="https://v2ymzk-8080.csb.app"
-ENV APIKEY="sk-bing"
+# 设置环境变量——Cookies"_U"，此处为随机字符
+ENV Go_Proxy_BingAI_USER_TOKEN_1="kJs81422hD92467569ncMz9pLaoQWYtX5rG6bE3fZ4iO"
 
 # 暴露8080端口
 EXPOSE 8080

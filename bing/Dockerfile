@@ -12,15 +12,15 @@ RUN apt-get update && apt-get install -y curl wget && \
     tar -zxvf go-bingai-pass-linux-amd64.tar.gz && \
     chmod +x go-bingai-pass
 
-RUN curl -L $(curl -s  https://api.github.com/repos/Harry-zklcdc/go-proxy-bingai/releases/latest | grep /go-proxy-bingai-linux-amd64.tar.gz | cut -d '"' -f 4) -o go-proxy-bingai-linux-amd64.tar.gz && \
+RUN apt-get update && apt-get install -y curl wget && \
+    curl -L $(curl -s  https://api.github.com/repos/Harry-zklcdc/go-proxy-bingai/releases/latest | grep /go-proxy-bingai-linux-amd64.tar.gz | cut -d '"' -f 4) -o go-proxy-bingai-linux-amd64.tar.gz && \
     tar -zxvf go-proxy-bingai-linux-amd64.tar.gz && \
     chmod +x go-proxy-bingai
 
 RUN apt-get remove -y curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
-    rm go-bingai-pass-linux-amd64.tar.gz && \
-    rm go-proxy-bingai-linux-amd64.tar.gz
+    rm go-bingai-pass-linux-amd64.tar.gz
 
 COPY supervisor.conf /etc/supervisor/conf.d/selenium.conf
 
@@ -36,7 +36,7 @@ USER $GBP_USER
 
 ENV PORT=7860
 ENV BROWSER_BINARY=/usr/bin/microsoft-edge
-ENV PASS_TIMEOUT=10
+# ENV PASS_TIMEOUT=10
 # ENV CHROME_PATH=/opt/google/chrome
 ENV XDG_CONFIG_HOME=/tmp/edge
 ENV XDG_CACHE_HOME=/tmp/edge

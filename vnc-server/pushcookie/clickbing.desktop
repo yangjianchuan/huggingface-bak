@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=ClickBing
+Exec=/home/user/Desktop/myshell/clickbing.sh
+Terminal=false
+X-GNOME-Autostart-enabled=true

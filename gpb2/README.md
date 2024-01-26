@@ -1,8 +1,8 @@
 ---
-title: Bing
+title: Gpb2
 emoji: 🐨
-colorFrom: green
-colorTo: blue
+colorFrom: red
+colorTo: green
 sdk: docker
 pinned: false
 license: mit

@@ -1,35 +1,46 @@
-# Build Stage
-# 使用 golang:alpine 作为构建阶段的基础镜像
-FROM golang:alpine AS builder
+FROM selenium/node-edge
 
-# 添加 git，以便之后能从GitHub克隆项目
-RUN apk --no-cache add git
+ENV GBP_USER ${GBP_USER:-gbp}
+ENV GBP_USER_ID ${GBP_USER_ID:-1000}
 
-# 从 GitHub 克隆 go-proxy-bingai 项目到 /workspace/app 目录下
-RUN git clone https://github.com/yangjianchuan/gpb2.git /workspace/app
+WORKDIR /app
 
-# 设置工作目录为之前克隆的项目目录
-WORKDIR /workspace/app
+USER root
 
-# 编译 go 项目。-ldflags="-s -w" 是为了减少编译后的二进制大小
-RUN go build -ldflags="-s -w" -tags netgo -trimpath -o go-proxy-bingai main.go
+RUN apt-get update && apt-get install -y curl wget && \
+    curl -L $(curl -s  https://api.github.com/repos/Harry-zklcdc/go-bingai-pass/releases/latest | grep /go-bingai-pass-linux-amd64.tar.gz | cut -d '"' -f 4) -o go-bingai-pass-linux-amd64.tar.gz && \
+    tar -zxvf go-bingai-pass-linux-amd64.tar.gz && \
+    chmod +x go-bingai-pass
 
-# Runtime Stage
-# 使用轻量级的 alpine 镜像作为运行时的基础镜像
-FROM alpine
+RUN apt-get update && apt-get install -y curl wget && \
+    curl -L $(curl -s  https://api.github.com/repos/Harry-zklcdc/go-proxy-bingai/releases/latest | grep /go-proxy-bingai-linux-amd64.tar.gz | cut -d '"' -f 4) -o go-proxy-bingai-linux-amd64.tar.gz && \
+    tar -zxvf go-proxy-bingai-linux-amd64.tar.gz && \
+    chmod +x go-proxy-bingai
 
-# 设置工作目录
-WORKDIR /workspace/app
+RUN apt-get remove -y curl && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    rm go-bingai-pass-linux-amd64.tar.gz
 
-# 从构建阶段复制编译后的二进制文件到运行时镜像中
-COPY --from=builder /workspace/app/go-proxy-bingai .
+COPY supervisor.conf /etc/supervisor/conf.d/selenium.conf
 
-# 设置环境变量
-ENV BYPASS_SERVER="https://v2ymzk-8080.csb.app"
-ENV APIKEY="sk-bing"
+RUN groupadd -g $GBP_USER_ID $GBP_USER
+RUN useradd -rm -G sudo -u $GBP_USER_ID -g $GBP_USER_ID $GBP_USER
 
-# 暴露8080端口
-EXPOSE 8080
+RUN mkdir -p /tmp/edge
+RUN chown "${GBP_USER_ID}:${GBP_USER_ID}" /var/run/supervisor /var/log/supervisor
+RUN chown -R "${GBP_USER_ID}:${GBP_USER_ID}" /app /tmp/edge
+RUN chmod 777 /tmp
 
-# 容器启动时运行的命令
-CMD ["/workspace/app/go-proxy-bingai"]
+USER $GBP_USER
+
+ENV PORT=7860
+ENV BROWSER_BINARY=/usr/bin/microsoft-edge
+# ENV PASS_TIMEOUT=10
+# ENV CHROME_PATH=/opt/google/chrome
+ENV XDG_CONFIG_HOME=/tmp/edge
+ENV XDG_CACHE_HOME=/tmp/edge
+
+ENV BYPASS_SERVER=http://localhost:8080
+
+EXPOSE 7860
