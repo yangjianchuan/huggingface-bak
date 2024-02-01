@@ -29,7 +29,7 @@ def call_api(url, cookies=None):
 with gr.Blocks() as iface:
     gr.Markdown("## 帮助你获取bing的cookie")
     gr.Markdown("帮助你过机器人验证，返回验证后的cookies")
-    url_input = gr.Dropdown(choices=['https://dongsiqie-pass.hf.space','https://zklcdc-pass.hf.space'],label="请选择验证服务器",value="https://dongsiqie-pass.hf.space")
+    url_input = gr.Textbox(label="验证服务器",value="https://bing-pass.dongsiqie.me")
     cookies_input = gr.Textbox(label="你的cookies，可以不填",placeholder="在此处输入你的cookies，可以不填")    
     button = gr.Button("点击获取cookies")
     response_output = gr.Textbox(label="验证后的cookies")
