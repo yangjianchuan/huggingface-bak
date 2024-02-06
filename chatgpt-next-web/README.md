@@ -1,11 +1,11 @@
 ---
-title: Chatgpt Next Web
-emoji: 👁
-colorFrom: red
-colorTo: pink
+title: ChatGPT-Next-Web
+emoji: 😻
+colorFrom: blue
+colorTo: yellow
 sdk: docker
 pinned: false
+license: mit
 app_port: 3000
 ---
-
-Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+需要环境变量待更新

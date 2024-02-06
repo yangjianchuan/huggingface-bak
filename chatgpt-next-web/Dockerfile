@@ -1,5 +1,7 @@
-FROM yidadaa/chatgpt-next-web
-ENV HIDE_USER_API_KEY=1
-ENV BASE_URL=https://dongsiqie-bingai.hf.space
-ENV OPENAI_API_KEY=sk-bing
-ENV CUSTOM_MODELS=-all,+Creative-g4t,+Balanced-g4t,+Precise-g4t,+Creative,+Balanced,+Precise,+Creative-g4t-offline,+Balanced-g4t-offline,+Precise-g4t-offline,+Creative-offline,+Balanced-offline,+Precise-offline
+FROM node:18
+RUN git clone https://github.com/Yidadaa/ChatGPT-Next-Web.git
+WORKDIR "ChatGPT-Next-Web"
+RUN npm i 
+RUN npm run build
+EXPOSE 3000
+CMD ["npm", "run", "start"]
