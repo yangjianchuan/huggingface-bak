@@ -9,4 +9,11 @@ license: mit
 app_port: 7860
 ---
 
-Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+
+gpb本体程序
+
+需要环境变量
+
+| 变量类型 | 变量名 | 变量值 |
+| -------- | ------ | ------ |
+| Secrets  | APIKEY | 随便填 |
