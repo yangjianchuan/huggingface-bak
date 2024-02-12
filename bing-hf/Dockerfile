@@ -46,6 +46,6 @@ ENV BROWSER_BINARY=/usr/bin/microsoft-edge
 ENV XDG_CONFIG_HOME=/tmp/edge
 ENV XDG_CACHE_HOME=/tmp/edge
 
-ENV BYPASS_SERVER="https://bing-pass.dongsiqie.me"
+ENV BYPASS_SERVER=http://localhost:8080
 
 EXPOSE 7860
