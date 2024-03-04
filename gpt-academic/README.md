@@ -6,7 +6,7 @@ colorTo: gray
 sdk: docker
 pinned: false
 license: mit
-app_port: 7860
+app_port: 12345
 ---
 
 需要环境变量，待更新

@@ -1,12 +1,12 @@
 ---
-title: DALL E 3 API
-emoji: 👁
-colorFrom: gray
+title: Llm Mixer
+emoji: ⚡
+colorFrom: yellow
 colorTo: purple
-sdk: gradio
-sdk_version: 4.8.0
-app_file: app.py
+sdk: docker
 pinned: false
+license: mit
+app_port: 23456
 ---
 
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference

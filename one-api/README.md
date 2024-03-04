@@ -9,4 +9,4 @@ license: mit
 app_port: 3000
 ---
 
-需要环境变量待更新
+需要环境变量`SQL_DSN`
